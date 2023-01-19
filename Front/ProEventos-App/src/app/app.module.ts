@@ -1,3 +1,4 @@
+import { DateTimeFormatPipe } from './helpers/DateTimeFormat.pipe';
 import { EventoService } from './services/Evento.service';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -16,7 +17,8 @@ import { FormsModule } from '@angular/forms';
     AppComponent,
     EventosComponent,
       PalestrantesComponent,
-      NavComponent
+      NavComponent,
+      DateTimeFormatPipe
    ],
   imports: [
     BrowserModule,

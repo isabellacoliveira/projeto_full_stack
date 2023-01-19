@@ -9,18 +9,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EventosComponent implements OnInit {
   public eventos: Evento[] = [];
-  public widthImg: number = 150;
-  public marginImg: number = 2;
-  public showImage: boolean = true;
+  public widthImg = 150;
+  public marginImg = 2;
+  public showImage = true;
   public eventosFiltrados: Evento[] = [];
-  public _filtroLista: string = '';
+  public filtroListado: string = '';
 
   public get filtroLista(): string{
-    return this._filtroLista;
+    return this.filtroListado;
   }
 
   public set filtroLista(value: string){
-    this._filtroLista = value;
+    this.filtroListado = value;
     this.eventosFiltrados = this.filtroLista ? this.filtrarEventos(this.filtroLista) : this.eventos;
   }
 
@@ -32,7 +32,7 @@ export class EventosComponent implements OnInit {
                   .toLocaleLowerCase()
                   .indexOf(filtrarPor) !== -1 ||
       evento.local.toLocaleLowerCase().indexOf(filtrarPor) !== -1
-    )
+    );
   }
 
   public showOrHideImage(): void {
@@ -46,12 +46,13 @@ export class EventosComponent implements OnInit {
   }
 
   public getEventos(): void {
-    this.eventoService.getEventos().subscribe(
-      (_eventos: Evento[])  => {
-        this.eventos = _eventos,
-        this.eventosFiltrados = this.eventos
-      } ,
-      error => console.log(error)
-    );
+    const observer = {
+      next: (eventos: Evento[]) => {
+        this.eventos = eventos;
+        this.eventosFiltrados = this.eventos;
+      },
+      error: (error: any) => console.log(error)
+    }
+    this.eventoService.getEventos().subscribe(observer);
   }
 }
