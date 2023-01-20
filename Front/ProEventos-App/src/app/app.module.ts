@@ -1,3 +1,4 @@
+import { ToastrModule } from 'ngx-toastr';
 import { DateTimeFormatPipe } from './helpers/DateTimeFormat.pipe';
 import { EventoService } from './services/Evento.service';
 import { NgModule } from '@angular/core';
@@ -13,6 +14,8 @@ import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { FormsModule } from '@angular/forms';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { ModalModule } from 'ngx-bootstrap/modal';
+
 
 @NgModule({
   declarations: [
@@ -30,7 +33,14 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
     CollapseModule.forRoot(),
     FormsModule,
     BsDropdownModule.forRoot(),
-    TooltipModule.forRoot()
+    TooltipModule.forRoot(),
+    ModalModule.forRoot(),
+    ToastrModule.forRoot({
+      timeOut: 3000,
+      positionClass: 'toast-bottom-right',
+      preventDuplicates: true,
+      progressBar: true
+    })
   ],
   providers: [EventoService],
   bootstrap: [AppComponent]

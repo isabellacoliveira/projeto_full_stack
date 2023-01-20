@@ -1,6 +1,8 @@
 import { Evento } from './../models/Evento';
 import { EventoService } from './../services/Evento.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-eventos',
@@ -14,6 +16,29 @@ export class EventosComponent implements OnInit {
   public showImage = true;
   public eventosFiltrados: Evento[] = [];
   public filtroListado: string = '';
+
+  modalRef?: BsModalRef;
+  message?: string;
+
+
+  constructor(private eventoService: EventoService,
+              private modalService: BsModalService,
+              private toastr: ToastrService) { }
+
+  openModal(template: TemplateRef<any>): void {
+    this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
+  }
+
+  confirm(): void {
+    this.message = 'Confirmed!';
+    this.modalRef?.hide();
+    this.toastr.success('O evento foi deletado com sucesso!', 'Deletado!');
+  }
+
+  decline(): void {
+    this.message = 'Declined!';
+    this.modalRef?.hide();
+  }
 
   public get filtroLista(): string{
     return this.filtroListado;
@@ -39,7 +64,6 @@ export class EventosComponent implements OnInit {
     this.showImage = !this.showImage;
   }
 
-  constructor(private eventoService: EventoService) { }
 
   public ngOnInit(): void {
     this.getEventos()
