@@ -15,6 +15,8 @@ import { FormsModule } from '@angular/forms';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
+import { NgxSpinnerModule } from "ngx-spinner";
 
 
 @NgModule({
@@ -40,9 +42,11 @@ import { ModalModule } from 'ngx-bootstrap/modal';
       positionClass: 'toast-bottom-right',
       preventDuplicates: true,
       progressBar: true
-    })
+    }),
+    NgxSpinnerModule
   ],
   providers: [EventoService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+
 })
 export class AppModule { }
