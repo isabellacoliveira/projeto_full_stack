@@ -1,3 +1,4 @@
+import { NgxSpinnerService } from 'ngx-spinner';
 import { Evento } from './../models/Evento';
 import { EventoService } from './../services/Evento.service';
 import { Component, OnInit, TemplateRef } from '@angular/core';
@@ -23,7 +24,8 @@ export class EventosComponent implements OnInit {
 
   constructor(private eventoService: EventoService,
               private modalService: BsModalService,
-              private toastr: ToastrService) { }
+              private toastr: ToastrService,
+              private spinner: NgxSpinnerService) { }
 
   openModal(template: TemplateRef<any>): void {
     this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
@@ -66,7 +68,8 @@ export class EventosComponent implements OnInit {
 
 
   public ngOnInit(): void {
-    this.getEventos()
+    this.spinner.show();
+    this.getEventos();
   }
 
   public getEventos(): void {
@@ -75,7 +78,11 @@ export class EventosComponent implements OnInit {
         this.eventos = eventos;
         this.eventosFiltrados = this.eventos;
       },
-      error: (error: any) => console.log(error)
+      error: (error: any) => {
+        this.spinner.hide(),
+        this.toastr.error('Erro ao carregar os eventos', 'Deletado!')
+      },
+      complete: () => this.spinner.hide()
     }
     this.eventoService.getEventos().subscribe(observer);
   }
