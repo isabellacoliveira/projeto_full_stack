@@ -16,6 +16,7 @@ import { FormsModule } from '@angular/forms';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
 
 
 @NgModule({
