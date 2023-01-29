@@ -1,3 +1,7 @@
+import { PerfilComponent } from './components/perfil/perfil.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { TituloComponent } from './shared/titulo/titulo.component';
+import { ContatosComponent } from './components/contatos/contatos.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { ToastrModule } from 'ngx-toastr';
 import { DateTimeFormatPipe } from './helpers/DateTimeFormat.pipe';
@@ -16,8 +20,6 @@ import { FormsModule } from '@angular/forms';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ModalModule } from 'ngx-bootstrap/modal';
-import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
-
 
 @NgModule({
   declarations: [
@@ -25,7 +27,11 @@ import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
     EventosComponent,
       PalestrantesComponent,
       NavComponent,
-      DateTimeFormatPipe
+      DateTimeFormatPipe,
+      ContatosComponent,
+      TituloComponent,
+      DashboardComponent,
+      PerfilComponent
    ],
   imports: [
     BrowserModule,
