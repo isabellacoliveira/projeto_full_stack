@@ -17,7 +17,7 @@ const routes: Routes = [
     children: [
       { path: 'login', component: LoginComponent },
       { path: 'registration', component: RegistrationComponent }
-    ]
+    ] 
   },
   { path: 'user/perfil', component: PerfilComponent },
   { path: 'eventos' , redirectTo: 'eventos/lista'},
