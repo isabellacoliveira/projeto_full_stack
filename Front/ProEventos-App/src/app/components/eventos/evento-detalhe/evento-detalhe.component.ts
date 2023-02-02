@@ -1,9 +1,6 @@
-import { NgxSpinnerService } from 'ngx-spinner';
-import { ToastrService } from 'ngx-toastr';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { Evento } from './../../../models/Evento';
-import { EventoService } from './../../../services/Evento.service';
-import { Component, TemplateRef } from '@angular/core';
+import { Component, NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import {FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-evento-detalhe',
@@ -11,5 +8,30 @@ import { Component, TemplateRef } from '@angular/core';
   styleUrls: ['./evento-detalhe.component.scss']
 })
 export class EventoDetalheComponent {
+  form!: FormGroup;
+  constructor(private fb: FormBuilder) { }
 
+  get f(): any {
+    return this.form.controls;
+  }
+
+  ngOnInit(): void {
+    this.validation();
+  }
+
+  public validation(): void {
+    this.form  = this.fb.group({
+        tema: ['', Validators.required],
+        local: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(50)]],
+        dataEvento: ['', Validators.required],
+        qtdPessoas: ['', [Validators.required, Validators.max(120000)]],
+        telefone: ['', [Validators.required, Validators.email]],
+        email: ['', Validators.required],
+        imagemURL: ['', Validators.required]
+    })
+  }
+
+  public resetForm(): void {
+    this.form.reset();
+  }
 }
