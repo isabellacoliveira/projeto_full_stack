@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProEventos.Application.Contratos;
-using ProEventos.Domain;
+using ProEventos.Application.Dtos;
 using ProEventos.Persistence.Contextos;
 
 namespace ProEventos.API.Controllers
@@ -28,8 +28,7 @@ namespace ProEventos.API.Controllers
             try
             {
                 var eventos = await _eventoService.GetAllEventosAsync(true); 
-                if(eventos == null) return NotFound("Nenhum evento encontrado"); 
-
+                if(eventos == null) return NoContent();     
                 return Ok(eventos); 
             }
             catch (Exception ex)
@@ -45,7 +44,7 @@ namespace ProEventos.API.Controllers
             try
             {
                 var eventos = await _eventoService.GetEventoByIdAsync(id, true);
-                if (eventos == null) return NotFound("Evento por Id não encontrado");
+                if (eventos == null) return NoContent();
 
                 return Ok(eventos);
             }
@@ -63,7 +62,7 @@ namespace ProEventos.API.Controllers
             try
             {
                 var eventos = await _eventoService.GetAllEventosByTemaAsync(tema, true);
-                if (eventos == null) return NotFound("Eventos por tema não encontrados");
+                if (eventos == null) return NoContent();
 
                 return Ok(eventos);
             }
@@ -75,7 +74,7 @@ namespace ProEventos.API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Post(Evento model)
+        public async Task<ActionResult> Post(EventoDto model)
         {
            try
             {
@@ -93,7 +92,7 @@ namespace ProEventos.API.Controllers
 
         // aqui passaremos um parametro 
         [HttpPut("{id}")]
-        public async Task<ActionResult> Put(int id, Evento model)
+        public async Task<ActionResult> Put(int id, EventoDto model)
         {
              try
             {
@@ -114,9 +113,13 @@ namespace ProEventos.API.Controllers
         {
              try
             {
+                // existe o conteudo que ele esta tentando deletar ?
+                var eventos = await _eventoService.GetEventoByIdAsync(id, true); 
+                if(eventos == null) return NoContent();   
+
                 return await _eventoService.DeleteEvento(id) ?  
                     Ok("Evento deletado")  : 
-                BadRequest("Evento não deletado");
+                    throw new Exception("Ocorreu um problema não especifico ao tentar deletar evento!");
             }
             catch (Exception ex)
             {
